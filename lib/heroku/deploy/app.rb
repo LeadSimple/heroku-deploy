@@ -37,7 +37,7 @@ module Heroku::Deploy
 
     def addon_enabled?(addon)
       all_addons = api.get_addons(name).body
-      !all_addons.find { |a| a['name'].to_s =~ addon.to_s }.nil?
+      !all_addons.find { |a| a['name'].to_s =~ /#{addon}/ }.nil?
     end
 
     def disable_maintenance
