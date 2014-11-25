@@ -15,6 +15,10 @@ module Heroku::Deploy::Task
         app.enable_maintenance
       end
 
+      if app.addon_enabled? :pgbackups
+        DatabaseBackup.backup(strategy)
+      end
+
       DatabaseMigrate.migrate(strategy)
     end
 
