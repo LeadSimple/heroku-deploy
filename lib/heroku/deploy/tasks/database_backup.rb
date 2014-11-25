@@ -10,8 +10,9 @@ module Heroku::Deploy::Task
       env_vars = app.env.dup
       env_vars['RAILS_ENV'] = 'production'
 
-      task "Backing up the remote database"
-      shell "heroku pgbackups:capture --expire"
+      task "Backing up the remote database" do
+        shell "heroku pgbackups:capture --expire"
+      end
     end
   end
 end
