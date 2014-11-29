@@ -52,8 +52,12 @@ module Heroku::Deploy
       /#\s*safe/
     end
 
+    def migration_directories
+      `find . -iname '*migrate'`.gsub(/\.\//, "").split(/\n/)
+    end
+
     def migrations_diff
-      diff %w(db/migrate)
+      diff migration_directories
     end
   end
 end
