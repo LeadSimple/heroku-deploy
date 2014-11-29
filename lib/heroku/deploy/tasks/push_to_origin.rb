@@ -4,7 +4,7 @@ module Heroku::Deploy::Task
 
     def deploy
       task "Pushing local #{colorize strategy.branch, :cyan} to #{colorize "origin", :cyan}"
-      git "push -u origin #{strategy.branch} -v", :exec => true
+      git "push -u -f origin #{strategy.branch} -v", :exec => true
     end
   end
 end
