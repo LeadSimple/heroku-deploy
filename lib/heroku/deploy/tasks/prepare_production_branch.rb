@@ -22,9 +22,17 @@ module Heroku::Deploy::Task
         local_branches = git "branch"
 
         if local_branches.match /#{strategy.branch}$/
-          git "branch -D #{strategy.branch}"
+          git "checkout #{strategy.branch}"
+        else
+          git "checkout -b #{strategy.branch}"
         end
-        git "checkout -b #{strategy.branch}"
+
+        # reset to whats on origin if the branch exists there already
+        remote_branches = git "branch -a"
+
+        if remote_branches.match /origin\/#{strategy.branch}$/
+          git "reset origin/#{strategy.branch} --hard"
+        end
       end
 
       task "Merging your current branch #{colorize @previous_branch, :cyan} into #{colorize strategy.branch, :cyan}" do

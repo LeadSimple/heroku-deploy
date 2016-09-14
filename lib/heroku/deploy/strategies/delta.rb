@@ -11,6 +11,11 @@ module Heroku::Deploy::Strategy
                 end
     end
 
+    # Compile assets if they have changed, or if the compiled assets folder does not exist
+    def should_compile_assets?
+      strategy.diff.has_asset_changes? || !File.exist?('public/assets')
+    end
+
     def perform
       strategy = self
 
@@ -20,13 +25,13 @@ module Heroku::Deploy::Strategy
       ]
 
       tasks << Proc.new do
-        if strategy.diff.has_asset_changes?
+        if should_compile_assets?
           CompileAssets.new(strategy)
         end
       end
 
       tasks << Proc.new do
-        if strategy.diff.has_asset_changes?
+        if should_compile_assets?
           CommitAssets.new(strategy)
         end
       end
