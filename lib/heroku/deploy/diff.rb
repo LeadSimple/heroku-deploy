@@ -19,7 +19,7 @@ module Heroku::Deploy
 
     def has_asset_changes?
       components = %w{api auth core marketing}
-      folders = %w(app/assets lib/assets vendor/assets)
+      folders = %w(app/assets lib/assets vendor/assets client Gemfile.lock)
       folders_to_check = folders
       folders_to_check += components.map {|c| folders.map {|f| "components/#{c}/#{f}"}}.flatten
       folders_that_exist = folders_to_check.select { |folder| File.exist?(folder) }
