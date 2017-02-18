@@ -29,6 +29,10 @@ module Heroku::Deploy
         deployer.branch
       end
 
+      def environment
+        deployer.environment
+      end
+
       def runner
         @runner ||= Heroku::Deploy::Runner.new
       end

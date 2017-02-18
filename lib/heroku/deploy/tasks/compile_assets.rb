@@ -7,7 +7,7 @@ module Heroku::Deploy::Task
       # initialize_on_precompile = shell %{bundle exec rails runner "puts Rails.application.config.assets.initialize_on_precompile"}
 
       env_vars = app.env.dup
-      env_vars['RAILS_ENV'] = 'production'
+      env_vars['RAILS_ENV'] = environment # see deployer.rb
       env_vars['RAILS_GROUPS'] = 'assets'
       env_vars.delete 'BUNDLE_WITHOUT'
 

@@ -38,6 +38,15 @@ module Heroku::Deploy
       "heroku-deploy/#{app.name}"
     end
 
+    def environment
+      case app.name.to_s
+      when /staging/ then 'staging'
+      when /playground/ then 'playground'
+      else
+        'production'
+      end
+    end
+
     def deploy
       banner <<-OUT
       _            _             _
